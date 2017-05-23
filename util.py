@@ -17,12 +17,22 @@ from sklearn.metrics import classification_report, accuracy_score, confusion_mat
 
 # Fungsi untuk load dataset 
 def load_dataset(filename):
+    """
+    Param :
+    filename = string
+        Path dan nama file dataset
+    """
     dataFrame = pd.read_csv(filename, header = 0)
     return dataFrame
 
 # Fungsi untuk mengubah raw data hasil crawl menjadi fitur-fitur yang diperlukan untuk 
 # melakukan seleksi fitur
 def edit_data(dataset):
+    """
+    Param :
+    filename = string
+        Path dan nama file dataset
+    """    
     fitur_extract = ['domain','slogan','name_shop','shop_owner','merchant_status', 'month_op','year_op','shop_age(Month)'
                     ,'UID','sold_product','total_etalase','Active','Responship','Timestamp','slogan_2','location']
     for i in range(len(fitur_extract)):
@@ -33,6 +43,15 @@ def edit_data(dataset):
 # Fungsi menggunakan method selectKbest dengan k = 12
 # Penggantian K dapat dilakukan sesuai kebutuhan
 def train_choosing_feature(dataset,file_header,file_data):
+    """
+    Param :
+    dataset = pandas dataframe
+        dataframe dari hasil pembacaan input dataset
+    file_header = string
+        Path dan nama file menyimpan data header
+    file_data = string
+        Path dan nama file menyimpan dataframe baru
+    """
     array = dataset.values
     X = array[:,1:-1]
     Y = array[:,-1]
@@ -54,6 +73,17 @@ def train_choosing_feature(dataset,file_header,file_data):
 
 # Fungsi untuk menyimpan dataset baru dan nama header dari fitur seleksi
 def selected_feature(newDF,newF,file_header,file_data):
+    """
+    Param :
+    newDF = pandas dataframe
+        dataframe dari hasil seleksi fitur
+    newF = list
+        list berisikan nama fitur hasil seleksi
+    file_header = string
+        Path dan nama file menyimpan data header
+    file_data = string
+        Path dan nama file menyimpan dataframe baru
+    """
     # Menyimpan dataset dengan fitur pilihan
     newDF.to_csv(file_data , index = False)
     # Menyimpan nama header fitur pilihan
@@ -66,6 +96,15 @@ def selected_feature(newDF,newF,file_header,file_data):
 # Fungsi untuk mengubah dataset test menyesuaikan dengan fitur terpilih
 # Fungsi ini juga menyimpan dataset test yang baru 
 def test_choosing_feature(dataset,file_header,file_data):
+    """
+    Param :
+    dataset = pandas dataframe
+        dataframe dari hasil pembacaan input dataset
+    file_header = string
+        Path dan nama file penyimpan data header
+    file_data = string
+        Path dan nama file menyimpan dataframe baru
+    """
     header_feature = []
     # Membaca data file header
     with open(file_header,'r+') as txtfile:
@@ -83,6 +122,13 @@ def test_choosing_feature(dataset,file_header,file_data):
 
 # Fungsi learning yang menggunakan metode LR dan penyimpanan model
 def learning(dataset,model):
+    """
+    Param :
+    dataset = pandas dataframe
+        dataframe dari hasil pembacaan input dataset
+    model = string
+        Path dan nama model untuk disimpan
+    """
     array = dataset.values
     X = array[:,1:-1]
     Y = array[:,-1]
@@ -94,6 +140,13 @@ def learning(dataset,model):
 
 # Fungsi evaluasi dari model hasil learning
 def evaluating(array,filename):
+    """
+    Param :
+    array = list
+        list dari values dari dataframe
+    filename = string
+        Path dan nama model yang disimpan
+    """
     print("Evaluation")
     X = array[:,1:-1]
     Y = array[:,-1] #label yang sebenarnya
@@ -115,6 +168,15 @@ def evaluating(array,filename):
 
 # Fungsi testing yang digunakan untuk melakukan test terhadap dataset baru
 def testing(dataset,model,filename):
+    """
+    Param :
+    dataset = pandas dataframe
+        dataframe dari hasil pembacaan input dataset
+    model = string
+        Path dan nama model yang disimpan
+    filename = string
+        Path dan nama file menyimpan dataframe baru hasil test
+    """
     array = dataset.values
     X = array[:,1:13]
     shop_id = array[:,0]
@@ -126,10 +188,22 @@ def testing(dataset,model,filename):
 
 # Fungsi untuk save learned model ke sebuah file
 def save_model(model, filename):
+    """
+    Param :
+    model = object 
+        Model dari hasil machine learning
+    filename = string
+        Path dan nama file menyimpan model hasil machine learning
+    """
     pickle.dump(model, open(filename, 'wb'))
     return print("Saving Model Succes\n")
 
 # Fungsi untuk load kembali model yang sudah di-save pada suatu file
 def load_model(filename):
+    """
+    Param :
+    filename = string
+        Path dan nama model disimpan
+    """
     loaded_model = pickle.load(open(filename, 'rb'))
     return loaded_model
