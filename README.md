@@ -1,4 +1,4 @@
-# ml_tokped
+# Machine Learning for Tokopedia
 Machine learning code for tokopedia merchant
 
 4 code file :
