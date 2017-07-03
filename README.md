@@ -1,5 +1,5 @@
-# Machine Learning for Tokopedia
-Machine learning code for tokopedia merchant
+# Machine Learning
+Machine learning code
 
 4 code file :
 util.py = set of method for other code to use
